@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Food List</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .status-നൽകി {
+            color: green;
+        }
+
+        .status-നൽക്കും {
+            color: rgb(11, 83, 170);
+        }
+
+        .status-നൽകില്ല {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome, Admin!</h1>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Full Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="foodTableBody">
+                <!-- Food data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        var foodData = {
+            "Sayidulavi Haji": { "date": "10/12/2023", "status": "നൽകി" },
+            "Bava Thangal": { "date": "17/12/2023", "status": "നൽകി" },
+            "Ismail K.K": { "date": "24/12/2023", "status": "നൽക്കും" },
+            "Haiduru": { "date": "31/12/2023", "status": "നൽക്കും" },
+            "Kunhippa Haji": { "date": "07/01/2024", "status": "നൽക്കും" },
+            "Salamu P": { "date": "14/01/2024", "status": "നൽക്കും" },
+            "Hussain Koy Thangal": { "date": "21/01/2024", "status": "നൽക്കും" },
+            "Poker": { "date": "28/01/2024", "status": "നൽക്കും" },
+            "Ali O.P": { "date": "04/02/2024", "status": "നൽക്കും" },
+            "Mushaik Thangal": { "date": "11/02/2024", "status": "നൽക്കും" },
+            "Suppi Haji": { "date": "18/02/2024", "status": "നൽക്കും" },
+            "Anas K.K": { "date": "25/02/2024", "status": "നൽക്കും" },
+            "Bava Menattil": { "date": "03/03/2024", "status": "നൽക്കും" },
+            "Ilikkal": { "date": "10/03/2024", "status": "നൽക്കും" }
+            // Add other data as needed
+        };
+
+        var tableBody = document.getElementById('foodTableBody');
+        for (var name in foodData) {
+            var data = foodData[name];
+            var fullDate = new Date(data.date);
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var formattedDate = fullDate.toLocaleDateString('en-US', options);
+
+            var row = tableBody.insertRow();
+            var cellName = row.insertCell(0);
+            var cellDate = row.insertCell(1);
+            var cellFullDate = row.insertCell(2);
+            var cellStatus = row.insertCell(3);
+
+            cellName.innerHTML = name;
+            cellDate.innerHTML = data.date;
+            cellFullDate.innerHTML = formattedDate;
+            cellStatus.innerHTML = data.status;
+
+            // Add status class for styling
+            cellStatus.classList.add('status-' + data.status.toLowerCase());
+        }
+    </script>
+</body>
+
+</html>

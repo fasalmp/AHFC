@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .completed {
+            color: green;
+        }
+
+        .pending {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Student Portal</h2>
+        <label for="studentId">Enter Student ID:</label>
+        <input type="text" id="studentId" placeholder="Enter ID">
+
+        <button class="btn btn-success" onclick="checkStudent()">Submit</button>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function checkStudent() {
+            var enteredId = document.getElementById('studentId').value;
+            var studentData = {
+                "11": { "name": "Sayyid Mueenudheen", "id": "11", "marks": "will update", "paymentStatus": "completed", "image": "MUEENUDHEEN-min.jpg" },
+                "22": { "name": "Hadi Ahmad", "id": "22", "marks": "will update", "paymentStatus": "pending", "image": "HADI AHMAD-min.jpg" },
+                "33": { "name": "Muhammad Shadin", "id": "33", "marks": "will update", "paymentStatus": "completed", "image": "SHADIN-min.jpg" },
+                "44": { "name": "Muhammad Nahyan", "id": "44", "marks": "will update", "paymentStatus": "pending", "image": "NAHYAN-min.jpg" },
+                "55": { "name": "Muhammad Rabeeh", "id": "55", "marks": "will update", "paymentStatus": "completed", "image": "RABEEH-min.jpg" },
+                "66": { "name": "Muhammad Razin", "id": "66", "marks": "will update", "paymentStatus": "pending", "image": "RIZIN-min.jpg" },
+                "77": { "name": "Adheem", "id": "77", "marks": "will update", "paymentStatus": "completed", "image": "ADEEM-min.jpg" },
+                "88": { "name": "Muhammad Musthafa", "id": "88", "marks": "will update", "paymentStatus": "pending", "image": "MUSTHAFA-min.jpg" },
+                "99": { "name": "Hamdan", "id": "99", "marks": "will update", "paymentStatus": "completed", "image": "HAMDAN'-min.jpg" },
+                "101": { "name": "Rayan", "id": "101", "marks": "will update", "paymentStatus": "pending", "image": "RAYAN-min.jpg" }
+            };
+
+            var adminIds = ["admin"]; // Add more admin IDs if needed
+
+            if (enteredId.toLowerCase() === "admin" || adminIds.includes(enteredId)) {
+                // Redirect to admin page
+                alert("Admin Found! Redirecting to the admin page...");
+                window.location.href = "admin-page.html";
+            } else if (enteredId in studentData) {
+                // Redirect to student details page
+                var student = studentData[enteredId];
+                alert("Student Found! Redirecting to the next page...");
+
+                // Determine the color based on payment status
+                var colorClass = (student.paymentStatus === "completed") ? "completed" : "pending";
+
+                // Redirect with student details including image
+                window.location.href = "student-details.html?id=" + student.id + "&name=" + student.name + "&marks=" + student.marks + "&color=" + colorClass + "&image=" + student.image;
+            } else {
+                alert("User not found. Please check the entered ID.");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

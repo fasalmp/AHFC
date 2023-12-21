@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #4caf50;
+        }
+
+        .student-photo {
+            max-width: 100%;
+            width: 140px; /* Adjust the width as needed */
+            height: 150px; /* Adjust the height as needed */
+            border: 8px solid #4caf50;
+            border-radius: 50%;
+            margin: 20px auto;
+            object-fit: cover; /* Maintain aspect ratio while covering the frame */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .complete {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: #ff5757;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            padding: 12px 25px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Student Details</h2>
+
+        <!-- Display Student Photo -->
+        <img class="student-photo" id="studentPhoto" alt="Student Photo">
+
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Attribute</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td id="studentName"></td>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td id="studentId"></td>
+                </tr>
+                <tr>
+                    <td>Marks</td>
+                    <td id="studentMarks"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" id="paymentStatus"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-success back-btn" onclick="goBack()">Back to Home</button>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to extract URL parameters
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Function to populate student details
+        function populateStudentDetails() {
+            var studentName = getParameterByName('name');
+            var studentId = getParameterByName('id');
+            var studentMarks = getParameterByName('marks');
+            var paymentStatus = getParameterByName('color');
+            var studentPhotoUrl = getParameterByName('image');
+
+            document.getElementById('studentName').innerText = studentName;
+            document.getElementById('studentId').innerText = studentId;
+            document.getElementById('studentMarks').innerText = studentMarks;
+            document.getElementById('paymentStatus').innerText = "Payment is " + paymentStatus;
+
+            // Set Student Photo
+            var studentPhoto = document.getElementById('studentPhoto');
+            studentPhoto.src = studentPhotoUrl;
+
+            // Apply color class based on payment status
+            if (paymentStatus.toLowerCase() === 'completed') {
+                document.getElementById('paymentStatus').classList.add('complete');
+            } else if (paymentStatus.toLowerCase() === 'pending') {
+                document.getElementById('paymentStatus').classList.add('pending');
+            }
+        }
+
+        // Function to go back to the home page
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        // Populate student details on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            populateStudentDetails();
+        });
+    </script>
+
+</body>
+
+</html>
