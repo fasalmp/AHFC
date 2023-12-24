@@ -24,13 +24,13 @@
         }
 
         .custom-container {
-            margin-top: 20px; /* Adjust the top margin as needed */
+            margin-top: 40px; /* Increase the top margin for better visibility on mobile */
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px; /* Adjust the top margin as needed */
+            margin-top: 20px;
         }
 
         th,
@@ -69,7 +69,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Date</th>
-                        <th>Full Date</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -89,7 +88,7 @@
         var foodData = {
             "ഫസൽ തങ്ങൾ": { "date": "10/12/2023", "status": "നൽകി" },
             "സൈദലവി ഹാജി": { "date": "17/12/2023", "status": "നൽകി" },
-            // Omitted the third row
+            "ആസിഫ്": { "date": "24/12/2023", "status": "നൽകി" },
             "ബാവ തങ്ങൾ": { "date": "31/12/2023", "status": "നൽക്കും" },
             "ഇസ്മാഈൽ കെ.കെ": { "date": "07/01/2024", "status": "നൽക്കും" },
             "ഹൈദുറൂ": { "date": "14/01/2024", "status": "നൽക്കും" },
@@ -115,12 +114,10 @@
             var row = tableBody.insertRow();
             var cellName = row.insertCell(0);
             var cellDate = row.insertCell(1);
-            var cellFullDate = row.insertCell(2);
-            var cellStatus = row.insertCell(3);
+            var cellStatus = row.insertCell(2);
 
             cellName.innerHTML = name;
             cellDate.innerHTML = data.date;
-            cellFullDate.innerHTML = formattedDate;
             cellStatus.innerHTML = data.status;
 
             // Add status class for styling
