@@ -35,7 +35,7 @@
     }
     .table-responsive {
       border-radius: 10px;
-      overflow: hidden;
+      overflow: auto; /* Make the table horizontally scrollable on small screens */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .table {
@@ -62,7 +62,10 @@
   <div class="container">
     <h2 class="mt-4 mb-4">Gareeb Navaz Thahfeezul Quran Day College</h2>
 
-    <div id="csvTable" class="table-responsive"></div>
+    <div id="csvTable" class="table-responsive">
+      <!-- Wrap the table inside the div with the class 'table-responsive' -->
+      <!-- The table will be horizontally scrollable on small screens -->
+    </div>
 
     <div class="mt-4">
       <div class="summary-box">
@@ -182,5 +185,4 @@
       summaryDiv.appendChild(balanceDiv);
     }
   </script>
-</body>
-</html>
+</
