@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .completed {
+            color: green;
+        }
+
+        .pending {
+            color: red;
+        }
+
+        .food-list-btn {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .food-list-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome, Admin!</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Marks</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody id="studentTableBody">
+            <!-- Student data will be populated here -->
+
+        </tbody>
+
+    </table>
+    
+
+    <script>
+        var studentData = {
+            "11": {
+                "name": "Sayyid Mueenudheen",
+                "id": "11",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            },
+            "22": {
+                "name": "Hadi Ahmad",
+                "id": "22",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            },
+            "33": {
+                "name": "Muhammad Shadin",
+                "id": "33",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            },
+            "44": {
+                "name": "Muhammad Nahyan",
+                "id": "44",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            },
+            "55": {
+                "name": "Muhammad Rabeeh",
+                "id": "55",
+                "marks": "will update",
+                "paymentStatus": "completed"
+            },
+            "66": {
+                "name": "Muhammad Razin",
+                "id": "66",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            },
+            "77": {
+                "name": "Adheem",
+                "id": "77",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            },
+            "88": {
+                "name": "Muhammad Musthafa",
+                "id": "88",
+                "marks": "will update",
+                "paymentStatus": "completed"
+            },
+            "99": {
+                "name": "Hamdan",
+                "id": "99",
+                "marks": "will update",
+                "paymentStatus": "completed"
+            },
+            "101": {
+                "name": "Rayan",
+                "id": "101",
+                "marks": "will update",
+                "paymentStatus": "pending"
+            }
+        };
+
+        var tableBody = document.getElementById('studentTableBody');
+        for (var studentId in studentData) {
+            var student = studentData[studentId];
+            var row = tableBody.insertRow();
+            var cellId = row.insertCell(0);
+            var cellName = row.insertCell(1);
+            var cellMarks = row.insertCell(2);
+            var cellPaymentStatus = row.insertCell(3);
+
+            cellId.innerHTML = student.id;
+            cellName.innerHTML = student.name;
+            cellMarks.innerHTML = student.marks;
+
+            cellPaymentStatus.innerHTML = student.paymentStatus;
+            cellPaymentStatus.classList.add(student.paymentStatus.toLowerCase());
+        }
+    </script>
+</body>
+
+</html>

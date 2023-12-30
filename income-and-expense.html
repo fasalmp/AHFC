@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gareeb</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 20px;
+      background: linear-gradient(135deg, #3498db, #8e44ad);
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    h2 {
+      color: #007bff;
+    }
+    #csvTable {
+      margin-top: 20px;
+    }
+    .table-responsive {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .table {
+      background-color: #ffffff;
+    }
+    .table th, .table td {
+      background-color: #f8f9fa;
+    }
+    .summary-box {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .total-row {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 class="mt-4 mb-4">Gareeb Navaz Thahfeezul Quran Day College</h2>
+
+    <div id="csvTable" class="table-responsive"></div>
+
+    <div class="mt-4">
+      <div class="summary-box">
+        <h5 class="mb-3">Summary</h5>
+        <div id="summary" class="row"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script>
+    // Specify the path or URL of the CSV file
+    const csvFilePath = 'students.csv';
+
+    // Fetch the CSV file and display it
+    fetch(csvFilePath)
+      .then(response => response.text())
+      .then(csvContent => {
+        displayCSV(csvContent);
+        calculateSummary(csvContent);
+      })
+      .catch(error => console.error('Error fetching CSV file:', error));
+
+    function displayCSV(csvContent) {
+      const csvRows = csvContent.split('\n');
+      const table = document.createElement('table');
+      table.classList.add('table', 'table-bordered', 'table-striped');
+
+      for (let i = 0; i < csvRows.length; i++) {
+        const csvCells = csvRows[i].split(',');
+        if (i === 0) {
+          // Header row
+          const thead = document.createElement('thead');
+          const headerRow = document.createElement('tr');
+          for (let j = 0; j < csvCells.length; j++) {
+            const th = document.createElement('th');
+            th.textContent = csvCells[j];
+            headerRow.appendChild(th);
+          }
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+        } else {
+          // Data rows
+          const tbody = document.createElement('tbody');
+          const dataRow = document.createElement('tr');
+          for (let j = 0; j < csvCells.length; j++) {
+            const td = document.createElement('td');
+            td.textContent = csvCells[j];
+            dataRow.appendChild(td);
+          }
+          tbody.appendChild(dataRow);
+          table.appendChild(tbody);
+        }
+      }
+
+      const csvTableDiv = document.getElementById('csvTable');
+      csvTableDiv.innerHTML = ''; // Clear previous table
+      csvTableDiv.appendChild(table);
+    }
+
+    function calculateSummary(csvContent) {
+      const csvRows = csvContent.split('\n');
+      const summaryDiv = document.getElementById('summary');
+      summaryDiv.innerHTML = '';
+
+      // Extract column names from the first row
+      const columns = csvRows[0].split(',');
+
+      let incomeIndex = -1;
+      let expenseIndex = -1;
+
+      // Find the index of 'Income' and 'Expense' columns
+      for (let i = 0; i < columns.length; i++) {
+        if (columns[i].toLowerCase().includes('income')) {
+          incomeIndex = i;
+        } else if (columns[i].toLowerCase().includes('expense')) {
+          expenseIndex = i;
+        }
+      }
+
+      if (incomeIndex === -1 || expenseIndex === -1) {
+        console.error("Income or Expense columns not found in CSV file.");
+        return;
+      }
+
+      const totals = [0, 0];
+
+      for (let i = 1; i < csvRows.length; i++) {
+        const csvCells = csvRows[i].split(',');
+        if (!isNaN(parseFloat(csvCells[incomeIndex]))) {
+          totals[0] += parseFloat(csvCells[incomeIndex]);
+        }
+        if (!isNaN(parseFloat(csvCells[expenseIndex]))) {
+          totals[1] += parseFloat(csvCells[expenseIndex]);
+        }
+      }
+
+      // Display Income, Expense, and Balance
+      const incomeDiv = document.createElement('div');
+      incomeDiv.classList.add('col-md-4');
+      incomeDiv.innerHTML = `<p><strong>Income:</strong> ${totals[0].toFixed(2)}</p>`;
+      summaryDiv.appendChild(incomeDiv);
+
+      const expenseDiv = document.createElement('div');
+      expenseDiv.classList.add('col-md-4');
+      expenseDiv.innerHTML = `<p><strong>Expense:</strong> ${totals[1].toFixed(2)}</p>`;
+      summaryDiv.appendChild(expenseDiv);
+
+      const balanceDiv = document.createElement('div');
+      balanceDiv.classList.add('col-md-4', 'total-row');
+      balanceDiv.innerHTML = `<p><strong>Balance:</strong> ${(totals[0] - totals[1]).toFixed(2)}</p>`;
+      summaryDiv.appendChild(balanceDiv);
+    }
+  </script>
+</body>
+</html>
