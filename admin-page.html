@@ -1,171 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #4caf50;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #2E3192, #1BFFFF); /* Canva-inspired gradient */
             color: #fff;
+            margin: 0;
         }
 
-        .completed {
-            color: green;
+        header {
+            background: linear-gradient(to right, #FFAC27, #FF4577); /* Canva-inspired gradient */
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            margin-bottom: 1em;
         }
 
-        .pending {
-            color: red;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 1em;
         }
 
-        .food-list-btn {
-            background-color: #4caf50;
+        .card {
+            width: 18rem;
+            margin: 1em;
+            background: linear-gradient(to right, #FFAC27, #FF4577); /* Canva-inspired gradient */
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
         }
 
-        .food-list-btn:hover {
-            background-color: #45a049;
+        .card-body {
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 1em;
+            background: linear-gradient(to right, #FFAC27, #FF4577); /* Canva-inspired gradient */
+            border: none;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #FF4577, #FFAC27); /* Canva-inspired gradient - hover state */
+        }
+
+        h2 {
+            color: #fff;
+        }
+
+        /* Additional styles for content */
+        .content {
+            background: linear-gradient(to right, #2E3192, #1BFFFF); /* Canva-inspired gradient */
+            padding: 1em;
+            margin-top: 1em;
+            border-radius: 5px;
         }
     </style>
 </head>
-
 <body>
-    <h1>Welcome, Admin!</h1>
+    <header>
+        <h1>Admin Page</h1>
+    </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Marks</th>
-                <th>Payment Status</th>
-            </tr>
-        </thead>
-        <tbody id="studentTableBody">
-            <!-- Student data will be populated here -->
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Food List</h5>
+                <button class="btn btn-primary" onclick="navigateTo('food-page.html')">Go to Food List</button>
+            </div>
+        </div>
 
-        </tbody>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Students</h5>
+                <button class="btn btn-primary" onclick="navigateTo('students.html')">Go to Students</button>
+            </div>
+        </div>
 
-    </table>
-    <a href="food-page.html" class="food-list-btn">FOOD LIST</a>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Income & Expenses</h5>
+                <button class="btn btn-primary" onclick="navigateTo('income-and-expense.html')">Go to Income & Expenses</button>
+            </div>
+        </div>
 
+        <!-- Content for Students Page -->
+        <div id="studentsContent" class="content" style="display: none;">
+            <h2>Students Page</h2>
+            <!-- Add content specific to the Students page here -->
+        </div>
+
+        <!-- Content for Food Page -->
+        <div id="foodPageContent" class="content" style="display: none;">
+            <h2>Food Page</h2>
+            <!-- Add content specific to the Food page here -->
+        </div>
+
+        <!-- Content for Income & Expense Page -->
+        <div id="incomeExpenseContent" class="content" style="display: none;">
+            <h2>Income & Expenses Page</h2>
+            <!-- Add content specific to the Income & Expenses page here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
-        var studentData = {
-            "11": {
-                "name": "Sayyid Mueenudheen",
-                "id": "11",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            },
-            "22": {
-                "name": "Hadi Ahmad",
-                "id": "22",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            },
-            "33": {
-                "name": "Muhammad Shadin",
-                "id": "33",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            },
-            "44": {
-                "name": "Muhammad Nahyan",
-                "id": "44",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            },
-            "55": {
-                "name": "Muhammad Rabeeh",
-                "id": "55",
-                "marks": "will update",
-                "paymentStatus": "completed"
-            },
-            "66": {
-                "name": "Muhammad Razin",
-                "id": "66",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            },
-            "77": {
-                "name": "Adheem",
-                "id": "77",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            },
-            "88": {
-                "name": "Muhammad Musthafa",
-                "id": "88",
-                "marks": "will update",
-                "paymentStatus": "completed"
-            },
-            "99": {
-                "name": "Hamdan",
-                "id": "99",
-                "marks": "will update",
-                "paymentStatus": "completed"
-            },
-            "101": {
-                "name": "Rayan",
-                "id": "101",
-                "marks": "will update",
-                "paymentStatus": "pending"
-            }
-        };
-
-        var tableBody = document.getElementById('studentTableBody');
-        for (var studentId in studentData) {
-            var student = studentData[studentId];
-            var row = tableBody.insertRow();
-            var cellId = row.insertCell(0);
-            var cellName = row.insertCell(1);
-            var cellMarks = row.insertCell(2);
-            var cellPaymentStatus = row.insertCell(3);
-
-            cellId.innerHTML = student.id;
-            cellName.innerHTML = student.name;
-            cellMarks.innerHTML = student.marks;
-
-            cellPaymentStatus.innerHTML = student.paymentStatus;
-            cellPaymentStatus.classList.add(student.paymentStatus.toLowerCase());
+        function navigateTo(page) {
+            window.location.href = page;
         }
     </script>
 </body>
-
 </html>
